@@ -3,7 +3,7 @@ node {
         checkout scm
     }
 
-    docker.image('maven:3-eclipse-temurin-21-alpine').inside('-u 0') {
+    docker.image('maven:3-eclipse-temurin-21-alpine').inside('-u 0 -v /root/.m2:/root/.m2') {
         stage('Build') {
             sh 'mvn -B -DskipTests clean package'
         }
@@ -15,9 +15,9 @@ node {
                 junit 'target/surefire-reports/*.xml'
             }
         }
-    }
 
-    stage('Deliver') {
-        sh 'chmod +x ./jenkins/scripts/deliver.sh && ./jenkins/scripts/deliver.sh'
+        stage('Deliver') {
+            sh 'chmod +x ./jenkins/scripts/deliver.sh && ./jenkins/scripts/deliver.sh'
+        }
     }
 }
