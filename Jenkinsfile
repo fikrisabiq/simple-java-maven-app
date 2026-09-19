@@ -24,8 +24,10 @@ node {
         }
 
         stage('Deploy') {
-            sh 'chmod +x jenkins/scripts/deliver.sh'
-            sh './jenkins/scripts/deliver.sh'
+            mavenImg.inside(dockerArgs) {
+                sh 'chmod +x jenkins/scripts/deliver.sh'
+                sh './jenkins/scripts/deliver.sh'
+            }
             
             sleep time: 1, unit: 'MINUTES'
         }
