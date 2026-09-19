@@ -3,7 +3,7 @@ node {
         checkout scm
     }
 
-    docker.image('maven:3-eclipse-temurin-21-alpine').inside('-u 0 -v /root/.m2:/root/.m2') {
+    docker.image('maven:3.9-amazoncorretto-21-debian').inside('-u 0 -v /root/.m2:/root/.m2') {
         stage('Build') {
             sh 'mvn -B -DskipTests clean package'
         }
