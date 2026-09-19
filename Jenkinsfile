@@ -1,11 +1,9 @@
 node {
-    def app
-
     stage('Checkout') {
         checkout scm
     }
 
-    docker.image('maven:3.9.6-eclipse-temurin-17-alpine').inside('-u 0') {
+    docker.image('maven:3-eclipse-temurin-21-alpine').inside('-u 0') {
         stage('Build') {
             sh 'mvn -B -DskipTests clean package'
         }
@@ -20,6 +18,6 @@ node {
     }
 
     stage('Deliver') {
-        sh './jenkins/scripts/deliver.sh'
+        sh 'chmod +x ./jenkins/scripts/deliver.sh && ./jenkins/scripts/deliver.sh'
     }
 }
